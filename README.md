@@ -1,6 +1,6 @@
 # Neural Office — AI Agent Workspace Template
 
-A responsive, animated isometric office template for visualizing AI agents and their real backend activity. The floorplan uses a dark isometric environment, color-coded departments, miniature animated robot agents, and a central Brain/Core.
+A responsive, animated isometric office template for visualizing AI agents and their real backend activity. The floorplan uses a dark isometric environment, color-coded departments, ten miniature animated robot agents, and a central Brain/Core.
 
 ## Preview locally
 
@@ -91,7 +91,7 @@ Supported status values are `working`, `idle` and `error`. Your orchestration ba
 
 ## Customization
 
-- Agent names, roles, departments and initial statuses: `assets/js/config.js`
+- All ten default agents' names, roles, departments and initial statuses: `assets/js/config.js`
 - Office layout, colors, room shapes and character styling: `index.html` and `assets/css/styles.css`
 - UI interactions and backend adapter: `assets/js/app.js`
 - Room names and department colors: SVG groups in `index.html`
