@@ -94,6 +94,58 @@
     mod[2]().forEach(item=>{const card=document.createElement("article");card.className="module-card";const h=document.createElement("h3"),p=document.createElement("p"),s=document.createElement("span");h.textContent=item.title;p.textContent=item.sub;s.className="status-tag";s.textContent=item.status;card.append(h,p,s);grid.append(card);});
     const note=document.createElement("p");note.className="muted";note.style.marginTop="20px";note.textContent=mod[3];content.append(grid,note);
   }
+
+  // Continuous office-floor patrols. Agents physically travel between their department,
+  // shared Brain/Core and neighboring workstations; pause/resume controls this loop.
+  const movementRoutes = {
+    nova:[[270,276],[330,292],[390,288],[460,288],[390,288],[330,292],[270,276]],
+    atlas:[[170,492],[210,470],[280,440],[350,390],[420,335],[460,288],[420,335],[350,390],[250,455],[170,492]],
+    echo:[[455,112],[455,155],[455,210],[460,250],[460,288],[460,250],[455,210],[455,155],[455,112]],
+    pixel:[[650,244],[620,260],[585,275],[540,285],[500,288],[460,288],[500,288],[540,285],[585,275],[620,260],[650,244]],
+    sage:[[185,355],[220,340],[270,325],[330,310],[390,295],[460,288],[390,295],[330,310],[270,325],[220,340],[185,355]],
+    orbit:[[390,482],[405,445],[420,400],[440,350],[460,288],[440,350],[420,400],[405,445],[390,482]],
+    muse:[[710,390],[680,370],[640,350],[600,325],[560,305],[510,292],[460,288],[510,292],[560,305],[600,325],[640,350],[680,370],[710,390]],
+    flux:[[770,414],[740,395],[700,375],[660,350],[620,325],[580,305],[520,290],[460,288],[520,290],[580,305],[620,325],[660,350],[700,375],[740,395],[770,414]],
+    quill:[[790,295],[750,290],[710,285],[670,280],[620,282],[560,285],[510,288],[460,288],[510,288],[560,285],[620,282],[670,280],[710,285],[750,290],[790,295]],
+    bolt:[[115,525],[145,500],[180,475],[220,445],[270,405],[320,365],[380,325],[460,288],[380,325],[320,365],[270,405],[220,445],[180,475],[145,500],[115,525]]
+  };
+  const motion = new Map();
+  function initAgentMotion(){
+    $("#agentLayer .agent").forEach(el=>{
+      const id=el.dataset.agent, route=movementRoutes[id];
+      if(!route) return;
+      const start=route[0];
+      el.setAttribute("transform",`translate(${start[0]} ${start[1]})`);
+      const ns="http://www.w3.org/2000/svg";
+      const legs=document.createElementNS(ns,"g"); legs.setAttribute("class","bot-legs");
+      for(const x of [-4,4]){const leg=document.createElementNS(ns,"path");leg.setAttribute("d",`M ${x} 6 l ${x<0?-2:2} 7`);leg.setAttribute("class","bot-leg");legs.append(leg);}
+      const arms=document.createElementNS(ns,"path");arms.setAttribute("d","M-7 -2l-5 7m19-7 5 7");arms.setAttribute("class","bot-arms");el.append(legs,arms);
+      motion.set(id,{el,route,index:0,x:start[0],y:start[1],progress:0,duration:0.85+Math.random()*0.55,wait:Math.random()*1.2,phase:Math.random()*Math.PI*2});
+    });
+  }
+  let motionFrame=0,lastMotionTime=0;
+  function animateAgents(time){
+    if(!lastMotionTime) lastMotionTime=time;
+    const dt=Math.min((time-lastMotionTime)/1000,.05); lastMotionTime=time;
+    if(!state.paused){
+      motion.forEach(m=>{
+        if(m.wait>0){m.wait-=dt;return;}
+        const a=m.route[m.index],b=m.route[(m.index+1)%m.route.length];
+        const distance=Math.hypot(b[0]-a[0],b[1]-a[1]);
+        m.progress+=dt/m.duration;
+        const t=Math.min(m.progress,1),ease=t*t*(3-2*t);
+        m.x=a[0]+(b[0]-a[0])*ease;m.y=a[1]+(b[1]-a[1])*ease;
+        const angle=Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;
+        const bob=Math.sin(time/95+m.phase)*1.15;
+        m.el.setAttribute("transform",`translate(${m.x.toFixed(2)} ${(m.y+bob).toFixed(2)})`);
+        m.el.classList.toggle("walking",distance>2);
+        m.el.style.setProperty("--walk-angle",angle+"deg");
+        if(t>=1){m.index=(m.index+1)%m.route.length;m.progress=0;m.duration=.8+Math.random()*.65;m.wait=.25+Math.random()*.8;}
+      });
+    }
+    motionFrame=requestAnimationFrame(animateAgents);
+  }
+
   function connectEvents() {
     if(!config.api?.websocketUrl || config.demoMode) return;
     try {
