@@ -4,6 +4,9 @@
   const $ = (s, root=document) => root.querySelector(s);
   const $$ = (s, root=document) => [...root.querySelectorAll(s)];
   const state = {paused:false,selectedAgent:null,activeView:"office",agents:config.agents||[],taskCount:12,ws:null};
+  $("#agentCount").textContent=String(state.agents.length).padStart(2,"0");
+  $("#floorAgentCount").textContent=String(state.agents.length).padStart(2,"0");
+  $("#activeCount").textContent=String(state.agents.filter(a=>a.status==="working").length).padStart(2,"0");
   const toast = message => { const el=$("#toast"); el.textContent=message; el.classList.add("show"); clearTimeout(toast.timer); toast.timer=setTimeout(()=>el.classList.remove("show"),2600); };
   const apiUrl = path => (config.api?.baseUrl||"").replace(/\/$/,"")+path;
   async function request(path, options={}) {
@@ -30,6 +33,21 @@
     const p=document.createElement("p"), b=document.createElement("b"), small=document.createElement("small");
     b.textContent=title; p.append(b,document.createTextNode(" "+detail));small.textContent="Just now · Agent workspace";p.append(small);item.append(icon,p);feed.prepend(item);
     while(feed.children.length>6) feed.lastElementChild.remove();
+  }
+  function renderAgentControls() {
+    const list=$("#agentList"), select=$("#taskAgent");
+    list.replaceChildren(); select.replaceChildren();
+    state.agents.forEach(agent=>{
+      const row=document.createElement("button"); row.type="button"; row.className="agent-row"; row.dataset.agentSelect=agent.id;
+      const avatar=document.createElement("span"); avatar.className="agent-avatar "+(agent.color||"purple"); avatar.textContent=agent.name.slice(0,1);
+      const info=document.createElement("span"); info.className="agent-info";
+      const name=document.createElement("b"); name.textContent=agent.name;
+      const role=document.createElement("small"); role.textContent=agent.role;
+      info.append(name,role);
+      const status=document.createElement("span"); status.className="row-status "+(agent.status==="working"?"working":"idle"); status.textContent=agent.status==="working"?"Working":"Idle";
+      row.append(avatar,info,status); row.addEventListener("click",()=>selectAgent(agent.id)); list.append(row);
+      const option=document.createElement("option"); option.value=agent.id; option.textContent=agent.name+" · "+agent.role; select.append(option);
+    });
   }
   function openTaskModal(agentId) { $("#taskModal").classList.remove("hidden"); if(agentId) $("#taskAgent").value=agentId; $("#taskDescription").focus(); }
   function closeTaskModal() { $("#taskModal").classList.add("hidden"); }
