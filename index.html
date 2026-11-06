@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10151d">
+  <meta name="description" content="Neural Office — an animated isometric workspace for AI agents.">
+  <title>Neural Office — AI Agent Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail">
+      <a class="brand-mark" href="#" aria-label="Neural Office home"><span class="brand-glyph">N</span></a>
+      <button class="rail-btn active" data-view="office" title="Office"><span>⌘</span></button>
+      <button class="rail-btn" data-view="agents" title="Agents"><span>♙</span></button>
+      <button class="rail-btn" data-view="workflows" title="Workflows"><span>⌁</span></button>
+      <button class="rail-btn" data-view="projects" title="Projects"><span>▦</span></button>
+      <div class="rail-spacer"></div>
+      <button class="rail-btn" data-view="settings" title="Settings"><span>⚙</span></button>
+      <div class="avatar-mini">V</div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="topbar-title"><div class="eyebrow">VIRTUAL WORKSPACE <span class="live-dot"></span> LIVE</div><h1>Neural Office</h1></div>
+        <div class="topbar-actions">
+          <div class="connection-pill" id="connectionPill"><i></i><span>Demo engine</span></div>
+          <button class="icon-btn" id="activityToggle" aria-label="Toggle activity">☷</button>
+          <button class="user-button"><span class="avatar">V</span><span>Workspace</span><b>⌄</b></button>
+        </div>
+      </header>
+
+      <section class="workspace-view" id="officeView">
+        <div class="welcome-row"><div><p class="eyebrow">MONDAY, 09:41 AM</p><h2>Your office is in motion.</h2><p class="muted">A living view of the agents working behind your AI systems.</p></div><div class="quick-actions"><button class="secondary-btn" id="pauseBtn">Ⅱ Pause motion</button><button class="primary-btn" id="newTaskBtn">＋ Assign task</button></div></div>
+
+        <div class="stats-strip">
+          <div class="stat"><span class="stat-icon violet">♙</span><div><strong id="agentCount">08</strong><small>Agents online</small></div></div>
+          <div class="stat"><span class="stat-icon mint">↗</span><div><strong id="taskCount">12</strong><small>Tasks today</small></div></div>
+          <div class="stat"><span class="stat-icon amber">◷</span><div><strong id="activeCount">04</strong><small>Working now</small></div></div>
+          <div class="stat"><span class="stat-icon blue">✧</span><div><strong id="skillCount">26</strong><small>Available skills</small></div></div>
+        </div>
+
+        <div class="office-layout">
+          <section class="office-card">
+            <div class="office-card-head"><div><span class="eyebrow">FLOOR 01 / OVERVIEW</span><h3>Agent headquarters</h3></div><div class="floor-tools"><span class="legend"><i class="legend-dot working"></i> Working</span><span class="legend"><i class="legend-dot idle"></i> Idle</span><button class="expand-btn" id="expandOffice" title="Expand office">⛶</button></div></div>
+            <div class="office-stage" id="officeStage">
+              <div class="stage-grid"></div>
+              <svg class="office-map" viewBox="0 0 920 620" role="img" aria-label="Isometric office with AI Core and eight departments">
+                <defs>
+                  <filter id="softGlow"><feGaussianBlur stdDeviation="7" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                  <linearGradient id="coreGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#5c4db3"/></linearGradient>
+                  <pattern id="tiles" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#ffffff" stroke-opacity=".10" stroke-width="1"/></pattern>
+                </defs>
+                <polygon class="floor-base" points="460,24 890,270 460,596 30,350"/>
+                <polygon class="floor-edge" points="30,350 460,596 460,612 30,366"/>
+                <polygon class="floor-edge" points="460,596 890,270 890,286 460,612"/>
+                <!-- Department floor plates are deliberately separated like the reference floorplan. -->
+                <g class="room room-ops" data-room="operations"><polygon points="105,275 305,160 470,255 270,370"/><polygon class="room-grid" points="105,275 305,160 470,255 270,370"/><text x="284" y="211" class="room-label">OPERATIONS HUB</text><rect class="desk" x="210" y="245" width="48" height="18" rx="3"/><rect class="desk" x="300" y="222" width="42" height="16" rx="3"/><rect class="desk" x="355" y="253" width="42" height="16" rx="3"/></g>
+                <g class="room room-intel" data-room="intelligence"><polygon points="310,115 455,32 615,124 470,207"/><polygon class="room-grid" points="310,115 455,32 615,124 470,207"/><text x="457" y="88" class="room-label">INTELLIGENCE LAB</text><rect class="desk" x="390" y="118" width="42" height="15" rx="3"/><rect class="desk" x="490" y="119" width="42" height="15" rx="3"/></g>
+                <g class="room room-studio" data-room="studio"><polygon points="485,240 635,154 800,249 650,336"/><polygon class="room-grid" points="485,240 635,154 800,249 650,336"/><text x="653" y="210" class="room-label">CREATIVE STUDIO</text><rect class="desk" x="560" y="246" width="44" height="16" rx="3"/><rect class="desk" x="685" y="231" width="42" height="16" rx="3"/></g>
+                <g class="room room-growth" data-room="growth"><polygon points="42,365 190,280 345,370 195,458"/><polygon class="room-grid" points="42,365 190,280 345,370 195,458"/><text x="187" y="342" class="room-label">GROWTH LAB</text><rect class="desk" x="105" y="371" width="44" height="16" rx="3"/><rect class="desk" x="230" y="384" width="42" height="16" rx="3"/></g>
+                <g class="room room-project" data-room="projects"><polygon points="235,470 385,382 540,472 390,560"/><polygon class="room-grid" points="235,470 385,382 540,472 390,560"/><text x="390" y="448" class="room-label">PROJECT ROOM</text><rect class="desk" x="300" y="479" width="46" height="17" rx="3"/><rect class="desk" x="430" y="492" width="46" height="17" rx="3"/></g>
+                <g class="room room-social" data-room="social"><polygon points="550,370 700,284 865,379 715,466"/><polygon class="room-grid" points="550,370 700,284 865,379 715,466"/><text x="705" y="344" class="room-label">SOCIAL DESK</text><rect class="desk" x="610" y="387" width="44" height="16" rx="3"/><rect class="desk" x="755" y="395" width="44" height="16" rx="3"/></g>
+                <g class="room room-dev" data-room="development"><polygon points="55,475 190,397 335,480 200,558"/><polygon class="room-grid" points="55,475 190,397 335,480 200,558"/><text x="192" y="458" class="room-label">DEV WORKSHOP</text><rect class="desk" x="100" y="493" width="44" height="16" rx="3"/><rect class="desk" x="230" y="512" width="44" height="16" rx="3"/></g>
+                <g class="room room-research" data-room="research"><polygon points="650,270 755,210 875,279 770,340"/><polygon class="room-grid" points="650,270 755,210 875,279 770,340"/><text x="764" y="258" class="room-label">RESEARCH</text></g>
+                <!-- central command platform -->
+                <g class="core-room" id="coreRoom"><polygon points="365,290 460,235 555,290 460,348"/><polygon class="core-ring" points="365,290 460,235 555,290 460,348"/><ellipse cx="460" cy="288" rx="49" ry="24" fill="#8b72ed" opacity=".14" filter="url(#softGlow)"/><path class="brain" d="M449 270c-12-14-28 3-18 15-8 11 4 23 15 16 7 11 22 7 23-5 15-2 14-22 2-25-2-13-17-14-22-1z" fill="url(#coreGrad)" stroke="#d9d0ff" stroke-width="2"/><path d="M460 266v35m-14-27 14 9 14-9m-27 21 13-8 13 8" fill="none" stroke="#eeeaff" stroke-width="2" opacity=".9"/><text x="460" y="326" text-anchor="middle" class="core-label">THE BRAIN / CORE</text><circle class="core-pulse" cx="460" cy="288" r="62"/></g>
+                <!-- glowing dotted paths toward the core -->
+                <g class="routes"><path d="M270 290L390 290 420 288M455 145L455 220 460 235M650 270L555 290M190 400L360 320M710 390L560 310M390 480L430 350" fill="none" stroke="#9b88ef" stroke-width="2" stroke-dasharray="4 9" opacity=".55"/></g>
+                <g id="agentLayer">
+                  <g class="agent" data-agent="nova" data-name="Nova" data-role="Operations" transform="translate(270 276)"><ellipse class="shadow" cy="12" rx="12" ry="5"/><rect class="bot-body" x="-8" y="-9" width="16" height="17" rx="5"/><circle class="bot-head" cy="-12" r="9"/><rect class="bot-screen" x="-5" y="-15" width="10" height="6" rx="2"/><text class="agent-tag" y="-28">Nova</text></g>
+                  <g class="agent" data-agent="atlas" data-name="Atlas" data-role="Developer" transform="translate(170 492)"><ellipse class="shadow" cy="12" rx="12" ry="5"/><rect class="bot-body" x="-8" y="-9" width="16" height="17" rx="5"/><circle class="bot-head" cy="-12" r="9"/><rect class="bot-screen" x="-5" y="-15" width="10" height="6" rx="2"/><text class="agent-tag" y="-28">Atlas</text></g>
+                  <g class="agent" data-agent="echo" data-name="Echo" data-role="Researcher" transform="translate(455 112)"><ellipse class="shadow" cy="12" rx="12" ry="5"/><rect class="bot-body" x="-8" y="-9" width="16" height="17" rx="5"/><circle class="bot-head" cy="-12" r="9"/><rect class="bot-screen" x="-5" y="-15" width="10" height="6" rx="2"/><text class="agent-tag" y="-28">Echo</text></g>
+                  <g class="agent" data-agent="pixel" data-name="Pixel" data-role="Designer" transform="translate(650 244)"><ellipse class="shadow" cy="12" rx="12" ry="5"/><rect class="bot-body" x="-8" y="-9" width="16" height="17" rx="5"/><circle class="bot-head" cy="-12" r="9"/><rect class="bot-screen" x="-5" y="-15" width="10" height="6" rx="2"/><text class="agent-tag" y="-28">Pixel</text></g>
+                  <g class="agent" data-agent="sage" data-name="Sage" data-role="Analyst" transform="translate(185 355)"><ellipse class="shadow" cy="12" rx="12" ry="5"/><rect class="bot-body" x="-8" y="-9" width="16" height="17" rx="5"/><circle class="bot-head" cy="-12" r="9"/><rect class="bot-screen" x="-5" y="-15" width="10" height="6" rx="2"/><text class="agent-tag" y="-28">Sage</text></g>
+                  <g class="agent" data-agent="orbit" data-name="Orbit" data-role="Project Manager" transform="translate(390 482)"><ellipse class="shadow" cy="12" rx="12" ry="5"/><rect class="bot-body" x="-8" y="-9" width="16" height="17" rx="5"/><circle class="bot-head" cy="-12" r="9"/><rect class="bot-screen" x="-5" y="-15" width="10" height="6" rx="2"/><text class="agent-tag" y="-28">Orbit</text></g>
+                  <g class="agent" data-agent="muse" data-name="Muse" data-role="Writer" transform="translate(710 390)"><ellipse class="shadow" cy="12" rx="12" ry="5"/><rect class="bot-body" x="-8" y="-9" width="16" height="17" rx="5"/><circle class="bot-head" cy="-12" r="9"/><rect class="bot-screen" x="-5" y="-15" width="10" height="6" rx="2"/><text class="agent-tag" y="-28">Muse</text></g>
+                  <g class="agent" data-agent="flux" data-name="Flux" data-role="Social Media" transform="translate(770 414)"><ellipse class="shadow" cy="12" rx="12" ry="5"/><rect class="bot-body" x="-8" y="-9" width="16" height="17" rx="5"/><circle class="bot-head" cy="-12" r="9"/><rect class="bot-screen" x="-5" y="-15" width="10" height="6" rx="2"/><text class="agent-tag" y="-28">Flux</text></g>
+                </g>
+              </svg>
+              <div class="stage-caption"><span><i class="legend-dot working"></i> Agents move between departments and the Core</span><span class="mono">ISOMETRIC VIEW · 01</span></div>
+            </div>
+            <div class="office-footer"><div><strong>8</strong><span>connected agents</span></div><div><strong>8</strong><span>departments</span></div><div><strong>01</strong><span>central intelligence</span></div><button class="text-btn" id="viewAgentsBtn">View all agents ↗</button></div>
+          </section>
+
+          <aside class="right-column">
+            <section class="panel core-panel"><div class="panel-head"><span class="eyebrow">CENTRAL INTELLIGENCE</span><span class="status-tag">ONLINE</span></div><div class="core-orb"><div class="orb-ring ring-one"></div><div class="orb-ring ring-two"></div><div class="orb-center">✳</div></div><h3>The Brain</h3><p>Shared memory, skills and orchestration.</p><div class="core-metrics"><div><strong>26</strong><small>Skills</small></div><div><strong>14</strong><small>Workflows</small></div><div><strong>06</strong><small>Projects</small></div></div><button class="panel-link" data-view="core">Open Core settings ↗</button></section>
+            <section class="panel agents-panel"><div class="panel-head"><div><span class="eyebrow">YOUR TEAM</span><h3>Active agents</h3></div><button class="more-btn" data-view="agents">•••</button></div><div class="agent-list" id="agentList">
+              <button class="agent-row" data-agent-select="nova"><span class="agent-avatar purple">N</span><span class="agent-info"><b>Nova</b><small>Operations manager</small></span><span class="row-status working">Working</span></button>
+              <button class="agent-row" data-agent-select="atlas"><span class="agent-avatar blue">A</span><span class="agent-info"><b>Atlas</b><small>Developer</small></span><span class="row-status working">Working</span></button>
+              <button class="agent-row" data-agent-select="echo"><span class="agent-avatar mint">E</span><span class="agent-info"><b>Echo</b><small>Researcher</small></span><span class="row-status idle">Idle</span></button>
+              <button class="agent-row" data-agent-select="pixel"><span class="agent-avatar orange">P</span><span class="agent-info"><b>Pixel</b><small>Designer</small></span><span class="row-status working">Working</span></button>
+            </div><button class="panel-link" data-view="agents">Manage all agents ↗</button></section>
+          </aside>
+        </div>
+        <section class="panel activity-panel"><div class="panel-head"><div><span class="eyebrow">LIVE FEED</span><h3>Office activity</h3></div><span class="muted tiny">Updates from the agent engine</span></div><div class="activity-feed" id="activityFeed"><div class="feed-item"><span class="feed-icon violet">✧</span><p><b>The Brain</b> shared a workflow with <b>Nova</b><small>Just now · Core</small></p></div><div class="feed-item"><span class="feed-icon blue">⌘</span><p><b>Atlas</b> started a code review task<small>2 min ago · Dev Workshop</small></p></div><div class="feed-item"><span class="feed-icon mint">⌕</span><p><b>Echo</b> finished a research brief<small>5 min ago · Intelligence Lab</small></p></div></div></section>
+      </section>
+      <section class="secondary-view hidden" id="secondaryView"><div class="welcome-row"><div><p class="eyebrow">WORKSPACE MODULE</p><h2 id="secondaryTitle">Agents</h2><p class="muted" id="secondaryDescription">Manage your autonomous team.</p></div><button class="secondary-btn" id="backOfficeBtn">← Back to office</button></div><div class="module-content" id="moduleContent"></div></section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <div class="modal-backdrop hidden" id="taskModal"><form class="task-modal" id="taskForm"><button type="button" class="modal-close" id="closeModal">×</button><span class="eyebrow">NEW ASSIGNMENT</span><h2>Send work to your team</h2><p class="muted">The selected agent receives this task through the configured adapter.</p><label>Task description<textarea id="taskDescription" required placeholder="e.g. Research competitors and prepare a short report…"></textarea></label><label>Assign to<select id="taskAgent"><option value="nova">Nova · Operations</option><option value="atlas">Atlas · Developer</option><option value="echo">Echo · Researcher</option><option value="pixel">Pixel · Designer</option><option value="sage">Sage · Analyst</option><option value="orbit">Orbit · Project Manager</option><option value="muse">Muse · Writer</option><option value="flux">Flux · Social Media</option></select></label><div class="modal-actions"><button type="button" class="secondary-btn" id="cancelTask">Cancel</button><button class="primary-btn" type="submit">Assign task ↗</button></div></form></div>
+  <script src="assets/js/config.js"></script><script src="assets/js/app.js"></script>
+</body></html>
