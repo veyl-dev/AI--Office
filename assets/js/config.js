@@ -21,6 +21,8 @@ window.NEURAL_OFFICE_CONFIG = {
     {id:"sage",name:"Sage",role:"Analyst",department:"Growth Lab",status:"idle",color:"mint"},
     {id:"orbit",name:"Orbit",role:"Project Manager",department:"Project Room",status:"working",color:"purple"},
     {id:"muse",name:"Muse",role:"Writer",department:"Social Desk",status:"idle",color:"blue"},
-    {id:"flux",name:"Flux",role:"Social Media",department:"Social Desk",status:"working",color:"orange"}
+    {id:"flux",name:"Flux",role:"Social Media",department:"Social Desk",status:"working",color:"orange"},
+    {id:"quill",name:"Quill",role:"Researcher",department:"Research",status:"idle",color:"mint"},
+    {id:"bolt",name:"Bolt",role:"Developer",department:"Dev Workshop",status:"working",color:"blue"}
   ]
 };
