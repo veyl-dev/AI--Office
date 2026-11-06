@@ -23,6 +23,37 @@ No build step or package manager is required.
 - REST API adapter and optional WebSocket event listener.
 - Editable configuration in `assets/js/config.js`.
 
+
+## Deploy to Vercel
+
+This repository is a plain static HTML/CSS/JavaScript site and is ready to deploy on Vercel. It does not require a framework, build command, Node.js build step, or environment variables for demo mode.
+
+### Deploy from GitHub
+
+1. Push or import this repository into your GitHub account.
+2. In Vercel, choose **Add New → Project** and import `veyl-dev/AI--Office`.
+3. In project settings, choose **Other** as the framework preset.
+4. Set the **Root Directory** to the repository root.
+5. Leave **Build Command** empty and set **Output Directory** to `.` (the project root).
+6. Click **Deploy**.
+
+The included `vercel.json` adds clean URLs and basic browser security headers. The site entry point is `index.html`; static assets are served from `/assets`.
+
+### Vercel CLI
+
+From the project root, run:
+
+```bash
+npm i -g vercel
+vercel
+```
+
+Follow the prompts to link the project. Use `vercel --prod` when you are ready to publish production.
+
+### Backend deployment note
+
+The current project is a frontend template. Demo mode works on Vercel without a backend. For real AI execution, deploy a separate secure API/orchestration backend or add Vercel Functions under an `api/` directory. Set `demoMode: false` and configure the API URL in `assets/js/config.js`. Keep AI provider keys in server-side environment variables, never in frontend files. A persistent WebSocket service may need a separate backend provider; Vercel Functions are not a continuously running WebSocket server.
+
 ## Connect a real AI agent backend
 
 The office is a visualization layer, not an AI runtime. Real work happens in your own backend or orchestration service. Keep provider API keys and secrets on the server; never place them in browser JavaScript.
