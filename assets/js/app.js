@@ -174,6 +174,9 @@
   $$("[data-agent-select]").forEach(el=>el.addEventListener("click",()=>selectAgent(el.dataset.agentSelect)));
   $$(".agent").forEach(el=>el.addEventListener("click",()=>selectAgent(el.dataset.agent)));
   $$(".room").forEach(el=>el.addEventListener("click",()=>{const room=el.dataset.room;const agent=state.agents.find(a=>a.department.toLowerCase().includes(room));toast((agent?.department||room)+" · Department selected");}));
+  renderAgentControls();
+  initAgentMotion();
+  requestAnimationFrame(animateAgents);
   updateConnection(false);
   if(!config.demoMode && config.api?.baseUrl) {
     request(config.api.agentsEndpoint||"/api/agents").then(data=>{if(Array.isArray(data?.agents)){data.agents.forEach(a=>updateAgentStatus(a.id,a.status));updateConnection(true);}}).catch(()=>updateConnection(false));
